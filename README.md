@@ -13,14 +13,6 @@ QuickThumb is a PHP class that simplifies the process of generating image thumbn
 
 You can include the QuickThumb class in your PHP project using composer or by manually including it in your project.
 
-### Composer Installation
-
-To install QuickThumb via Composer, run the following command in your project directory:
-
-```bash
-composer require marianojwl/quickthumb
-```
-
 ### Manual Installation
 
 1. Download the [QuickThumb.php](https://github.com/yourusername/yourrepository/blob/main/QuickThumb.php) file from this repository.
