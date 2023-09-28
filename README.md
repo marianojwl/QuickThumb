@@ -1,6 +1,3 @@
-Certainly! Below is a README.md template for your GitHub repository that provides an overview of the `marianojwl\QuickThumb` class and instructions on how to use it.
-
-```markdown
 # QuickThumb - PHP Image Thumbnail Generator
 
 QuickThumb is a PHP class that simplifies the process of generating image thumbnails from existing image files. It offers a convenient way to create resized versions of images while maintaining their aspect ratios.
