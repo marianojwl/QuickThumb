@@ -26,11 +26,15 @@ namespace marianojwl\QuickThumb {
             // Create an image resource based on the file extension
             switch($ext) {
                 case "jpg":
+                case "JPG":
                 case "jpeg":
+                case "JPEG":
                     return imagecreatefromjpeg($path);
                 case "png":
+                case "PNG":
                     return imagecreatefrompng($path);
                 case "gif":
+                case "GIF":
                     return imagecreatefromgif($path);
                 default:
                     // Handle unsupported image types gracefully
@@ -43,10 +47,14 @@ namespace marianojwl\QuickThumb {
             switch($ext) {
                 case "jpg":
                 case "jpeg":
+                case "JPEG":
+                case "JPG":
                     return imagejpeg($gd, $path);
                 case "png":
+                case "PNG":
                     return imagepng($gd, $path);
                 case "gif":
+                case "GIF":
                     return imagegif($gd, $path);
                 default:
                     return false;
