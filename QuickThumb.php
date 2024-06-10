@@ -1,7 +1,7 @@
 <?php
 namespace marianojwl\QuickThumb {
     class QuickThumb {
-        public static function make(string $path_origin) {
+        public static function make(string $path_origin, int $thumbWidth = 100) {
             // Get information about the original file
             $fileInfo = pathinfo($path_origin);
             
@@ -15,7 +15,7 @@ namespace marianojwl\QuickThumb {
             $gd = self::imageCreate($path_origin, $fileInfo['extension']);
 
             // If thumbnail creation is successful, return the path; otherwise, return null
-            if (self::createThumb($gd, $path_result, $fileInfo['extension'])) {
+            if (self::createThumb($gd, $path_result, $fileInfo['extension'], $thumbWidth)) {
                 return $path_result;
             } else {
                 return null;
