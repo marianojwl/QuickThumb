@@ -1,21 +1,72 @@
 <?php
 namespace marianojwl\QuickThumb {
     class QuickThumb {
+        private static function checkMimeFromPathAndReturnExtension($path) {
+            // Get the MIME type of the file eg: image/jpeg, path eg: https://docs.google.com/spreadsheets/d/1Vzwkcp5cFKeC4YShX3MzI1LpJSLydXv_siUUM7Hlmjc/edit?gid=0#gid=0
+            try {
+                $mime = @mime_content_type($path);
+            } catch (Exception $e) {
+                // Handle the exception
+                return "png";
+            }
+
+            // Define an array of MIME types and their corresponding file extensions
+            $mimeTypes = [
+                'image/jpeg' => 'jpg',
+                'image/png' => 'png',
+                'image/gif' => 'gif'
+            ];
+
+            // Return the file extension based on the MIME type
+            if(array_key_exists($mime, $mimeTypes)) {
+                return $mimeTypes[$mime];
+            } else {
+                return "png";
+            }
+        }
+
+        public static function makeFromString(string $imageData, string $dir, string $fileName, int $thumbWidth = 100) {
+          /*
+          // Get information about the original file
+          $fileInfo = pathinfo($path_origin);
+          $extension = $fileInfo['extension']??self::checkMimeFromPathAndReturnExtension($path_origin);
+          
+          // Define the suffix for the thumbnail
+          $suffix = '_thumb';
+          
+          // Generate the path for the thumbnail
+          $path_result = $fileInfo['dirname'] . '/' . $fileInfo['filename'] . $suffix . '.' . $extension;
+          */
+          // Create an image resource from the original image
+          $suffix = '_thumb';
+          $extension = "png";
+          $path_result = $dir . '/' . $fileName . $suffix . '.' . $extension;
+          $gd = imagecreatefromstring($imageData);
+
+          // If thumbnail creation is successful, return the path; otherwise, return null
+          if (self::createThumb($gd, $path_result, $extension, $thumbWidth)) {
+              return $path_result;
+          } else {
+              return null;
+          }
+      }
+
         public static function make(string $path_origin, int $thumbWidth = 100) {
             // Get information about the original file
             $fileInfo = pathinfo($path_origin);
+            $extension = $fileInfo['extension']??self::checkMimeFromPathAndReturnExtension($path_origin);
             
             // Define the suffix for the thumbnail
             $suffix = '_thumb';
             
             // Generate the path for the thumbnail
-            $path_result = $fileInfo['dirname'] . '/' . $fileInfo['filename'] . $suffix . '.' . $fileInfo['extension'];
+            $path_result = $fileInfo['dirname'] . '/' . $fileInfo['filename'] . $suffix . '.' . $extension;
 
             // Create an image resource from the original image
-            $gd = self::imageCreate($path_origin, $fileInfo['extension']);
+            $gd = self::imageCreate($path_origin, $extension);
 
             // If thumbnail creation is successful, return the path; otherwise, return null
-            if (self::createThumb($gd, $path_result, $fileInfo['extension'], $thumbWidth)) {
+            if (self::createThumb($gd, $path_result, $extension, $thumbWidth)) {
                 return $path_result;
             } else {
                 return null;
